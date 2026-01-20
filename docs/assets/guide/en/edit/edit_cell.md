@@ -317,6 +317,8 @@ interface ListTableAPI {
   startEditCell: (col?: number, row?: number, value?: string | number) => void;
   /** End editing */
   completeEditCell: () => void;
+  /** Cancel editing */
+  cancelEditCell: () => void;
   // ...
 }
 ```
@@ -332,7 +334,6 @@ The basic table supports editing the display title in the header. You can enable
 **In a pivot table, when a cell in the body corresponds to only one source data record, the field value of the record will be modified accordingly after editing. However, when the cell corresponds to an indicator value that aggregates multiple records, it does not support corresponding modifications to the source data.**
 
 The source data corresponding to a specific cell can be obtained through the interface `getCellOriginRecord`
-
 
 ## edit trigger timing is keydown notice
 

@@ -308,7 +308,7 @@ interface ListTableAPI {
    * @param row 粘贴数据的起始行号
    * @param values 多个单元格的数据数组
    * @param workOnEditableCell 是否仅允许更改可编辑单元格的值，默认为 false
-   * @param 
+   * @param
    gerEvent 是否在值发生改变的时候触发change_cell_value事件
    */
   changeCellValues(startCol: number, startRow: number, values: string[][], workOnEditableCell = false, triggerEvent=true) => Promise<boolean[][]>;
@@ -318,6 +318,8 @@ interface ListTableAPI {
   startEditCell: (col?: number, row?: number, value?: string | number) => void;
   /** 结束编辑 */
   completeEditCell: () => void;
+  /** 取消编辑 */
+  cancelEditCell: () => void;
   // ...
 }
 ```
@@ -334,8 +336,9 @@ interface ListTableAPI {
 
 具体单元格对应的源数据可以通过接口`getCellOriginRecord`来获取。
 
-## 编辑时机为keydown时注意事项
- 中文输入法下如果出现第一个拼音被识别成了英文字符，那么请检查是否有prepareEdit 函数。在编辑时机为keydown时，鼠标点击单元格将调用此方法，提前将创建输入框，并将输入框设置为不可见，等待用户输入。
+## 编辑时机为 keydown 时注意事项
+
+中文输入法下如果出现第一个拼音被识别成了英文字符，那么请检查是否有 prepareEdit 函数。在编辑时机为 keydown 时，鼠标点击单元格将调用此方法，提前将创建输入框，并将输入框设置为不可见，等待用户输入。
 
 ## 总结
 
