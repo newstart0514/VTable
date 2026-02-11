@@ -81,8 +81,6 @@ export class AddRowColumnPlugin implements pluginsDefinition.IVTablePlugin {
       );
       this.hoverCell = cell;
       if (!table.cellIsInVisualView(cell.col, cell.row)) {
-        this.delayHideAllForAddColumn(0);
-        this.delayHideAllForAddRow(0);
         return;
       }
       const cellRect = table.getCellRelativeRect(cell.col, cell.row);
