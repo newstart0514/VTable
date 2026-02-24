@@ -168,12 +168,16 @@ export function createComplexColumn(
         cellHeight = mergeSize.cellHeight;
       }
     }
+    const startCol = range ? range.start.col : col;
+    const startRow = range ? range.start.row : row;
+    const rawRecord = table.getCellRawRecord(startCol, startRow);
+    const isGroupTitle = !!rawRecord?.vtableMerge;
+
     let isVtableMerge = false;
-    if (table.internalProps.enableTreeNodeMerge && isMerge) {
-      const rawRecord = table.getCellRawRecord(range.start.col, range.start.row);
+    if (table.internalProps.enableTreeNodeMerge && (isMerge || isGroupTitle)) {
       const { vtableMergeName, vtableMerge } = rawRecord ?? {};
 
-      isVtableMerge = vtableMerge;
+      isVtableMerge = !!vtableMerge;
       if (vtableMerge) {
         mayHaveIcon = true;
         if ((table.internalProps as ListTableProtected).groupTitleCustomLayout) {

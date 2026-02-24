@@ -639,12 +639,16 @@ export function updateCell(
     range = table.getCellRange(col, row);
     isMerge = range.start.col !== range.end.col || range.start.row !== range.end.row;
   }
+  const startCol = range ? range.start.col : col;
+  const startRow = range ? range.start.row : row;
+  const rawRecord = table.getCellRawRecord(startCol, startRow);
+  const isGroupTitle = !!rawRecord?.vtableMerge;
+
   let isVtableMerge = false;
-  if (table.internalProps.enableTreeNodeMerge && isMerge) {
-    const rawRecord = table.getCellRawRecord(range.start.col, range.start.row);
+  if (table.internalProps.enableTreeNodeMerge && (isMerge || isGroupTitle)) {
     const { vtableMergeName, vtableMerge } = rawRecord ?? {};
 
-    isVtableMerge = vtableMerge;
+    isVtableMerge = !!vtableMerge;
     if (vtableMerge) {
       mayHaveIcon = true;
       if ((table.internalProps as ListTableProtected).groupTitleCustomLayout) {
