@@ -44,7 +44,6 @@ export function bindContainerDomListener(eventManager: EventManager) {
     }
 
     eventManager.dealTableHover();
-    // eventManager.dealTableSelect();
   });
 
   // 监听键盘事件
@@ -355,9 +354,8 @@ export function bindContainerDomListener(eventManager: EventManager) {
         }
         //点击到表格外部不需要取消选中状态
         if (table.options.select?.outsideClickDeselect) {
-          const isHasSelected = !!stateManager.select.ranges?.length;
-          eventManager.dealTableSelect();
-          stateManager.endSelectCells(true, isHasSelected);
+          const hadSelected = stateManager.clearSelectState(true);
+          stateManager.endSelectCells(true, hadSelected);
         }
       });
       table.scenegraph.updateChartState(null, undefined);
